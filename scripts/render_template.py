@@ -200,7 +200,7 @@ def render_html_to_image(template_name, data, output_path=None):
 
 def main():
     parser = argparse.ArgumentParser(description='Render HTML template to E-Ink optimized PNG')
-    parser.add_argument('template_name', help='Name of the template (without .html extension)')
+    parser.add_argument('template_name', nargs='?', help='Name of the template (without .html extension)')
     parser.add_argument('data_file', nargs='?', help='JSON file with template data (optional)')
     parser.add_argument('output', nargs='?', help='Output PNG filename (optional)')
     parser.add_argument('--list-templates', action='store_true', help='List available templates')
@@ -220,6 +220,9 @@ def main():
         else:
             print("Templates directory not found")
         return
+    
+    if not args.template_name:
+        parser.error("template_name is required unless using --list-templates")
     
     # Test chromium availability
     try:
